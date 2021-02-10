@@ -4,16 +4,18 @@ const getBetAmount = (gs) => {
     const community_cards = gs.community_cards;
     const current_buy_in = gs.current_buy_in;
 
-    if (hasPair(hole_cards)) {
-        return stack;
+    if (pair(hole_cards)) {
+        return pair(hole_cards) >= 10 ? stack : parseInt(stack / 5);
     }
 
-    if (community_cards && hasPairWithCommunity(hole_cards, community_cards)) {
-        return stack;
+    if (community_cards && pairWithCommunity(hole_cards, community_cards)) {
+        return pairWithCommunity(hole_cards, community_cards) >= 10
+            ? stack
+            : parseInt(stack / 5);
     }
 
-    if (isHighCard(hole_cards)) {
-        return stack;
+    if (isHigherThan(hole_cards, 24)) {
+        return parseInt(stack / 5);
     }
 
     if (community_cards && sameSuitCount(hole_cards, community_cards)) {
@@ -47,11 +49,11 @@ const rankToNumber = (rank) => {
     }
 };
 
-const isHighCard = (cards) => {
+const isHigherThan = (cards, maxSum = 24) => {
     const r1 = rankToNumber(cards[0].rank);
     const r2 = rankToNumber(cards[1].rank);
 
-    return r1 + r2 > 24 ? true : false;
+    return r1 + r2 >= maxSum ? true : false;
 };
 
 const sameSuitCount = (cards, communityCards) => {
@@ -81,22 +83,22 @@ const sameSuitCount = (cards, communityCards) => {
     return 0;
 };
 
-const hasPair = (cards) => {
-    return cards[0].rank === cards[1].rank;
+const pair = (cards) => {
+    return cards[0].rank === cards[1].rank ? cards[1].rank : 0;
 };
 
-const hasPairWithCommunity = (cards, communityCards) => {
+const pairWithCommunity = (cards, communityCards) => {
     const communityCardRanks = communityCards.map((card) => card.rank);
 
     if (communityCardRanks.includes(cards[0].rank)) {
-        return true;
+        return cards[0].rank;
     }
 
     if (communityCardRanks.includes(cards[1].rank)) {
-        return true;
+        return cards[1].rank;
     }
 
-    return false;
+    return 0;
 };
 
 module.exports.getBetAmount = getBetAmount;
