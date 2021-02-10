@@ -4,6 +4,8 @@ const getBetAmount = (gs) => {
     const community_cards = gs.community_cards;
     const current_buy_in = gs.current_buy_in;
 
+    console.log(gs.players);
+
     if (pair(hole_cards)) {
         return pair(hole_cards) >= 10 ? stack : 0;
     }
