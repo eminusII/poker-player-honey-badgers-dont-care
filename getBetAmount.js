@@ -12,7 +12,7 @@ const getBetAmount = (gs) => {
         return stack;
     }
 
-    if (current_buy_in && current_buy_in < stack / 10) {
+    if (current_buy_in && current_buy_in < stack / 7) {
         return current_buy_in;
     }
 
