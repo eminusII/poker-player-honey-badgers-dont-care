@@ -12,8 +12,8 @@ const getBetAmount = (gs) => {
         return pairWithCommunity(hole_cards, community_cards) >= 10 ? stack : 0;
     }
 
-    if (isHigherThan(hole_cards, 24)) {
-        return 0;
+    if (!community_cards && isHigherThan(hole_cards, 24)) {
+        return parseInt(stack / 5);
     }
 
     if (community_cards && sameSuitCount(hole_cards, community_cards)) {
