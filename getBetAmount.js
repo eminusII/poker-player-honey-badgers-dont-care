@@ -12,9 +12,9 @@ const getBetAmount = (gs) => {
         return stack;
     }
 
-    if (isHighCard(hole_cards)) {
-        return stack;
-    }
+    // if (isHighCard(hole_cards)) {
+    //     return stack;
+    // }
 
     if (community_cards && sameSuitCount(hole_cards, community_cards)) {
         const ssc = sameSuitCount(hole_cards, community_cards);
@@ -82,7 +82,7 @@ const sameSuitCount = (cards, communityCards) => {
         return c;
     }
 
-    return false;
+    return 0;
 };
 
 const hasPair = (cards) => {
