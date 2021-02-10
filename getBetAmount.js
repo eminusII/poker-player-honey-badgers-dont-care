@@ -1,10 +1,31 @@
+const e = require("express");
+
 const getBetAmount = (gs) => {
     const ourPlayer = gs.players[gs.in_action];
     const { hole_cards, stack } = ourPlayer;
     const community_cards = gs.community_cards;
     const current_buy_in = gs.current_buy_in;
 
-    console.log(gs.players);
+    if (gs.in_action === gs.dealer && current_buy_in == gs.small_blind * 2) {
+        if (pair(hole_cards)) {
+            return current_buy_in + 1;
+        }
+
+        if (community_cards && pairWithCommunity(hole_cards, community_cards)) {
+            return current_buy_in + 1;
+        }
+
+        if (!community_cards && isHigherThan(hole_cards, 24)) {
+            return current_buy_in + 1;
+        }
+
+        if (community_cards && sameSuitCount(hole_cards, community_cards)) {
+            const ssc = sameSuitCount(hole_cards, community_cards);
+            if (ssc > 3 && community_cards.length < 4) {
+                return current_buy_in + 1;
+            }
+        }
+    }
 
     if (pair(hole_cards)) {
         return pair(hole_cards) >= 10 ? stack : 0;
