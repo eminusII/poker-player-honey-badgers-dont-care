@@ -23,10 +23,6 @@ const getBetAmount = (gs) => {
         }
     }
 
-    if (hole_cards[0].suit === hole_cards[1].suit) {
-        return current_buy_in;
-    }
-
     if (current_buy_in && current_buy_in < parseInt(stack / 7)) {
         return current_buy_in;
     }
