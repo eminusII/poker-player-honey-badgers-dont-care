@@ -23,10 +23,6 @@ const getBetAmount = (gs) => {
         }
     }
 
-    if (current_buy_in && current_buy_in < parseInt(stack / 12)) {
-        return current_buy_in;
-    }
-
     return 0;
 };
 
