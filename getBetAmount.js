@@ -13,7 +13,7 @@ const getBetAmount = (gs) => {
     if (
         gs.in_action === gs.dealer &&
         current_buy_in === gs.small_blind * 2 &&
-        activePlayers.length < 3
+        activePlayers.length === 3
     ) {
         if (pair(hole_cards)) {
             return stack;
