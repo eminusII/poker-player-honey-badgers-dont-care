@@ -13,7 +13,7 @@ const getBetAmount = (gs) => {
     }
 
     if (community_cards && inSameSuit(hole_cards, community_cards)) {
-        return current_buy_in + current_buy_in / 10;
+        return current_buy_in + parseInt(current_buy_in / 10);
     }
 
     if (current_buy_in && current_buy_in < stack / 7) {
@@ -28,14 +28,23 @@ const inSameSuit = (cards, communityCards) => {
         return false;
     }
 
+    const suit = cards[0].suit;
+
     const communityCardSuit = communityCards.map((card) => card.suit);
 
+    let c = 0;
+    for (let i = 0; i < communityCardSuit.length; i++) {
+        if (communityCardSuit[i] === suit) {
+            c += 1;
+        }
+    }
+
     if (communityCardSuit.includes(cards[0].suit)) {
-        return true;
+        return c;
     }
 
     if (communityCardSuit.includes(cards[1].suit)) {
-        return true;
+        return c;
     }
 
     return false;
