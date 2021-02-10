@@ -2,7 +2,7 @@ const { getBetAmount } = require("./getBetAmount");
 
 class Player {
     static get VERSION() {
-        return "0.10";
+        return "0.11";
     }
 
     static betRequest(gameState, bet) {

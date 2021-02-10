@@ -5,22 +5,20 @@ const getBetAmount = (gs) => {
     const current_buy_in = gs.current_buy_in;
 
     if (pair(hole_cards)) {
-        return pair(hole_cards) >= 10 ? stack : parseInt(stack / 5);
+        return pair(hole_cards) >= 10 ? stack : 0;
     }
 
     if (community_cards && pairWithCommunity(hole_cards, community_cards)) {
-        return pairWithCommunity(hole_cards, community_cards) >= 10
-            ? stack
-            : parseInt(stack / 5);
+        return pairWithCommunity(hole_cards, community_cards) >= 10 ? stack : 0;
     }
 
     if (isHigherThan(hole_cards, 24)) {
-        return parseInt(stack / 5);
+        return 0;
     }
 
     if (community_cards && sameSuitCount(hole_cards, community_cards)) {
         const ssc = sameSuitCount(hole_cards, community_cards);
-        if (ssc > 3 && community_cards.length < 5) {
+        if (ssc > 3 && community_cards.length < 4) {
             return stack;
         }
     }
