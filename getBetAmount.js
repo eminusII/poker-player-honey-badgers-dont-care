@@ -12,27 +12,62 @@ const getBetAmount = (gs) => {
         return stack;
     }
 
-    if (community_cards && inSameSuit(hole_cards, community_cards)) {
-        return current_buy_in + parseInt(current_buy_in / 10);
+    if (isHighCard(hole_cards)) {
+        return stack;
     }
 
-    if (current_buy_in && current_buy_in < stack / 7) {
+    if (community_cards && sameSuitCount(hole_cards, community_cards)) {
+        const ssc = sameSuitCount(hole_cards, community_cards);
+        if (ssc > 3 && community_cards.length < 5) {
+            return stack;
+        }
+    }
+
+    if (hole_cards[0].suit === hole_cards[0].suit) {
+        return current_buy_in;
+    }
+
+    if (current_buy_in && current_buy_in < parseInt(stack / 7)) {
         return current_buy_in;
     }
 
     return 0;
 };
 
-const inSameSuit = (cards, communityCards) => {
+const rankToNumber = (rank) => {
+    switch (rank) {
+        case "A":
+            return 14;
+        case "K":
+            return 13;
+        case "Q":
+            return 12;
+        case "J":
+            return 11;
+        case "T":
+            return 10;
+        default:
+            return parseInt(rank);
+    }
+};
+
+const isHighCard = (cards) => {
+    const r1 = rankToNumber(cards[0].rank);
+    const r2 = rankToNumber(cards[1].rank);
+
+    return r1 + r2 > 24 ? true : false;
+};
+
+const sameSuitCount = (cards, communityCards) => {
     if (cards[0].suit !== cards[0].suit) {
-        return false;
+        return 0;
     }
 
     const suit = cards[0].suit;
 
     const communityCardSuit = communityCards.map((card) => card.suit);
 
-    let c = 0;
+    let c = 2;
     for (let i = 0; i < communityCardSuit.length; i++) {
         if (communityCardSuit[i] === suit) {
             c += 1;
