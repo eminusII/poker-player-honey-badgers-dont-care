@@ -35,6 +35,15 @@ const getBetAmount = (gs) => {
         }
     }
 
+    if (
+        activePlayers.length === 2 &&
+        (pair(hole_cards) ||
+            pairWithCommunity(hole_cards, community_cards) ||
+            isHigherThan(hole_cards, 24))
+    ) {
+        return stack;
+    }
+
     if (pair(hole_cards)) {
         return pair(hole_cards) >= 10 ? stack : 0;
     }
