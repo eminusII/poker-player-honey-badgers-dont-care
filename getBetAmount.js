@@ -6,23 +6,31 @@ const getBetAmount = (gs) => {
     const community_cards = gs.community_cards;
     const current_buy_in = gs.current_buy_in;
 
-    if (gs.in_action === gs.dealer && current_buy_in == gs.small_blind * 2) {
+    const activePlayers = gs.players.map(
+        (player) => player.status === "active"
+    );
+
+    if (
+        gs.in_action === gs.dealer &&
+        current_buy_in === gs.small_blind * 2 &&
+        activePlayers.length < 3
+    ) {
         if (pair(hole_cards)) {
-            return current_buy_in + 1;
+            return stack;
         }
 
         if (community_cards && pairWithCommunity(hole_cards, community_cards)) {
-            return current_buy_in + 1;
+            return stack;
         }
 
         if (!community_cards && isHigherThan(hole_cards, 24)) {
-            return current_buy_in + 1;
+            return stack;
         }
 
         if (community_cards && sameSuitCount(hole_cards, community_cards)) {
             const ssc = sameSuitCount(hole_cards, community_cards);
             if (ssc > 3 && community_cards.length < 4) {
-                return current_buy_in + 1;
+                return stack;
             }
         }
     }
