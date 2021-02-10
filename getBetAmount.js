@@ -12,9 +12,9 @@ const getBetAmount = (gs) => {
         return stack;
     }
 
-    // if (isHighCard(hole_cards)) {
-    //     return stack;
-    // }
+    if (isHighCard(hole_cards)) {
+        return stack;
+    }
 
     if (community_cards && sameSuitCount(hole_cards, community_cards)) {
         const ssc = sameSuitCount(hole_cards, community_cards);
@@ -23,7 +23,7 @@ const getBetAmount = (gs) => {
         }
     }
 
-    if (hole_cards[0].suit === hole_cards[0].suit) {
+    if (hole_cards[0].suit === hole_cards[1].suit) {
         return current_buy_in;
     }
 
